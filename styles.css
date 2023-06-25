@@ -1,15 +1,44 @@
 body{
-    color: black;
-    background-color: rgb(245, 244, 242);
+    color: rgb(48, 25, 7);
+    background-color: rgb(243, 241, 239);
+    font-family: 'Roboto Mono', monospace;
+    font-family: 'Rubik Dirt', cursive;
+    
 }
 .container{
     display: flex;
+    
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    
 }
 .option{
     padding: 15px;
     margin: 5px;
     background-color: wheat;
+    border-radius: 10px;
+    text-align: justify;
+    max-width: 30vw;
+    max-height: 40vh;
+    
 }
 h1 ,h2{
     text-align: center;
+}
+left, right{
+    transition: 0.4s;
+}
+#left:hover{
+    transform: scale(1.2) translate(-5%,0) rotate(-0.5deg);
+    transition: 0.4s;
+    border: 1px solid white;
+    background-color: rgb(129, 154, 236);
+}
+#right:hover{
+    transform: scale(1.2) translate(5%,0) rotate(0.5deg);
+    transition: 0.4s;
+    border: 1px solid white;
+    background-color: rgb(236, 154, 129);
 }
