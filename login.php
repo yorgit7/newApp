@@ -1,25 +1,56 @@
-<?php
-
-    $conn = mysqli_connect("localhost", "root", "", "optiman") or die("Connection failed");
-
-
-?>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+	<title>Login</title>
+    <link rel="stylesheet" href="log.css">
 </head>
 <body>
-    <h1>login</h1>
-    <form action="" method="post" onsubmit="return false;"></form>
-    <label for="name">Username</label>
-    <input type="text" name="name">
-    <label for="password">Username</label>
-    <input type="text" name="password">
+	<h1>Login</h1>
+	<form method="post" action="login.php">
+		<label for="username">Username:</label>
+		<input type="text" name="username" id="username" required><br>
+		<label for="password">Password:</label>
+		<input type="password" name="password" id="password" required><br>
+		<input type="submit" value="Login">
+        <p><a href="signup.php">Create Account</a></p>
+	</form>
 
-    <input type="submit" value="submit">
-    <label for=""><a href="signup.php">Create Account?</a></label>
+	<?php
+	// When the form is submitted, connect to the database and check the user's credentials
+	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+		$username = $_POST['username'];
+		$password = $_POST['password'];
+
+		// Connect to the database
+		$servername = "localhost";
+		$usernameC = "root";
+		$passwordC = "";
+		$dbname = "optiman";
+
+		$conn = new mysqli($servername, $usernameC, $passwordC, $dbname);
+
+		// Check connection
+		if ($conn->connect_error) {
+			die("Connection failed: " . $conn->connect_error);
+		}
+
+		// Check the user's credentials
+		$sql = "SELECT * FROM user WHERE username='$username' AND password='$password'";
+		$result = $conn->query($sql);
+        
+		if ($result->num_rows == 1) {
+			echo "Login successful";
+            $id = mysqli_fetch_assoc($result);
+            
+            $st = strval($id['id']);
+            setcookie("id", "$st", time() + 3600, "/");
+            header("location: index.html");
+		} else {
+			echo "Invalid username or password";
+		}
+
+		$conn->close();
+	}
+	?>
 </body>
 </html>
